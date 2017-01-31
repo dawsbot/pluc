@@ -33,7 +33,6 @@ module.exports = class Pluc {
   transpileJson(opts) {
     opts = opts || {};
     const configPath = opts.configPath || this.config.path;
-    const shellPath = opts.shellPath || this.shellPath;
     const shebang = '#!/usr/bin/env bash';
 
     const transform = obj => {
@@ -43,7 +42,7 @@ module.exports = class Pluc {
       return `${shebang}\n${body}`;
     };
 
-    jsonFnFile(configPath, shellPath, transform);
+    jsonFnFile(configPath, this.shellPath, transform);
     return true;
   }
 };
