@@ -7,16 +7,21 @@ const Conf = require('dotless-conf');
 
 module.exports = class Pluc {
   constructor(opts, outputFileName) {
-    this.config = new Conf(opts || {});
-    this.outputFileName = outputFileName || 'pluc.sh';
+    opts = opts || {};
+    const defaultConfigName = 'shell';
+    const configName = opts.configName || defaultConfigName;
+    this.config = new Conf(opts || {configName});
+    this.outputFileName = outputFileName || `${configName}.sh`;
     this.transpileJson();
+
+    this.transpileJson = this.transpileJson.bind(this);
   }
 
-  get jsonPath() {
+  get sourcePath() {
     return this.config.path;
   }
 
-  get shellPath() {
+  get destinationPath() {
     return path.join(this.config.path, '..', this.outputFileName);
   }
 
@@ -42,7 +47,7 @@ module.exports = class Pluc {
       return `${shebang}\n${body}`;
     };
 
-    jsonFnFile(configPath, this.shellPath, transform);
+    jsonFnFile(configPath, this.destinationPath, transform);
     return true;
   }
 };

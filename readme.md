@@ -16,10 +16,10 @@ $ npm install --global pluc
 Now source the pluc output file in your shell. Paste this in your bash profile (~/.bashrc, ~/.zshrc, ~/.bash_profile, , or ~/.profile).
 
 ```sh
-source "$(pluc-cli --shellPath)"
+source "$(pluc-cli --destinationPath)"
 function pluc() {
   pluc-cli "$@"
-  source "$(pluc-cli --shellPath)"
+  source "$(pluc-cli --destinationPath)"
 }
 ```
 
@@ -28,7 +28,7 @@ That also sets up a function to immediately source new aliases. Should you ignor
 ## Verify Installation
 
 ```sh
-$ pluc --jsonPath
+$ pluc --sourcePath
 # Should output a json filepath, not an error.
 ```
 
@@ -96,13 +96,13 @@ $ pluc --help
 `pluc` uses a single JSON object to store aliases. Since JSON is already key-value based, it's a perfect data format. To manually edit the JSON source file (**you absolutely will eventually**) enter
 
 ```sh
-$ $EDITOR $(pluc --jsonPath)
+$ $EDITOR $(pluc --sourcePath)
 ```
 
 After any new alias is added to `pluc`, the `render` function is called which builds a shell file. The shell output is what you `source`'d at the very beginning. To see it right now, enter
 
 ```sh
-$ $EDITOR $(pluc --shellPath)
+$ $EDITOR $(pluc --destinationPath)
 ```
 
 :warning: Do not edit the output shell file, it gets deleted on re-render (often) :warning:
@@ -114,7 +114,7 @@ $ $EDITOR $(pluc --shellPath)
   * `source` is only available within your current shell. As soon as you start a new session, your alias is gone.
 
 * How can I edit my aliases?
-  * `$ $EDITOR $(pluc --jsonPath)`
+  * `$ $EDITOR $(pluc --sourcePath)`
 
 
 * Why store the data as a JSON object?
