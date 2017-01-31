@@ -25,8 +25,8 @@ const cli = meow(
       Aliased "ni" to "npm install"
 
   Options
-    --shellPath  Print file path to compiled shell
-    --jsonPath   Print file path to json source
+    --destinationPath  Print file path to compiled shell
+    --sourcePath   Print file path to json source
     --transpile  Manually transpile json to shell (You probably won't need)
     --projectName Manually change projectName (You probably won't need)
     `
@@ -45,10 +45,11 @@ if (!(hasInput || hasFlags)) {
   console.log(cli.help);
 }
 
+let renderFn = pluc.transpileJson;
 if (hasFlags) {
   // TODO: have transpile message show where it transpiled out to
   if (flags.transpile) {
-    const message = `Transpiled ${pluc.jsonPath} to ${pluc.shellPath}`;
+    const message = `Transpiled ${pluc.sourcePath} to ${pluc.destinationPath}`;
     pluc.transpileJson();
     logSuccess(message);
   }
@@ -56,8 +57,9 @@ if (hasFlags) {
   const projectName = flags.projectName;
   projectName && (pluc = new Pluc({projectName}));
 
-  flags.jsonPath && console.log(pluc.jsonPath);
-  flags.shellPath && console.log(pluc.shellPath);
+  flags.sourcePath && console.log(pluc.sourcePath);
+  flags.destinationPath && console.log(pluc.destinationPath);
+  flags.vim && (renderFn = pluc.transpileVim);
 }
 
 if (hasInput) {
@@ -67,5 +69,5 @@ if (hasInput) {
   pluc.setAlias(alias, command);
   logSuccess(`Aliased "${alias}" to "${command}"`);
 
-  pluc.transpileJson();
+  renderFn();
 }
