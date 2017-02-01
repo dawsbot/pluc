@@ -40,14 +40,14 @@ module.exports = class Pluc {
     const configPath = opts.configPath || this.config.path;
     const shebang = '#!/usr/bin/env bash';
 
-    const transform = obj => {
+    const render = obj => {
       const body = Object.keys(obj).reduce((acc, key) => {
         return acc + buildShellScript.alias(key, obj[key]) + '\n';
       }, '');
       return `${shebang}\n${body}`;
     };
 
-    jsonFnFile(configPath, this.destinationPath, transform);
+    jsonFnFile(configPath, this.destinationPath, render);
     return true;
   }
 };
