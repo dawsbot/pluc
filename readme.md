@@ -130,10 +130,10 @@ $ $EDITOR $(pluc --destinationPath)
 ```
 
 * The history inferred by `pluc <alias>` alone is not accurate.
-  * History is obtained with [@dawsonbotsford/shell-history](https://github.com/dawsonbotsford/shell-history). Please open an issue there.
+  * History is obtained with [@dawsbot/shell-history](https://github.com/dawsbot/shell-history). Please open an issue there.
 
 <!-- * How can I add a new render method?
-  1. Create and test a render function as a standalone module. (Fork [build-shell-fn](https://github.com/dawsonbotsford/build-shell-fn))
+  1. Create and test a render function as a standalone module. (Fork [build-shell-fn](https://github.com/dawsbot/build-shell-fn))
   2. Add a transpile method in [index.js](./src/index.js). (Copy `transpileJSON()`)
   3. Add a flag for render function within [cli.js](./src/cli.js)
   4. Document the new render method in the `--help` in `src/cli.js`
@@ -143,7 +143,7 @@ $ $EDITOR $(pluc --destinationPath)
 
 * `pluc` will not create valid aliases on Windows. Windows does not save terminal history.
 
-* `pluc` will not work with `fish` shell. It likely will not work for shells beyond bash or zsh. This is because of the `parse` function in [`@dawsonbotsford/shell-history`](https:///github.com/dawsonbotsford/shell-history) package. PR's welcome.
+* `pluc` will not work with `fish` shell. It likely will not work for shells beyond bash or zsh. This is because of the `parse` function in [`@dawsbot/shell-history`](https:///github.com/dawsbot/shell-history) package. PR's welcome.
 
 ## License
 
@@ -151,7 +151,7 @@ MIT © [Dawson Botsford](http://dawsonbotsford.com)
 
 [npm-image]: https://badge.fury.io/js/pluc.svg
 [npm-url]: https://npmjs.org/package/pluc
-[travis-image]: https://travis-ci.org/dawsonbotsford/pluc.svg?branch=master
-[travis-url]: https://travis-ci.org/dawsonbotsford/pluc
+[travis-image]: https://travis-ci.org/dawsbot/pluc.svg?branch=master
+[travis-url]: https://travis-ci.org/dawsbot/pluc
 [xo-image]: https://img.shields.io/badge/code_style-XO-5ed9c7.svg
 [xo-url]: https://github.com/sindresorhus/xo
