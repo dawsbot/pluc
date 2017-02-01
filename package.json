@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "Create permanent terminal aliases instantly",
   "license": "MIT",
-  "homepage": "https://github.com/dawsonbotsford/pluc#readme",
+  "homepage": "https://github.com/dawsbot/pluc#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dawsonbotsford/pluc.git"
+    "url": "git+https://github.com/dawsbot/pluc.git"
   },
   "author": {
     "name": "Dawson Botsford",
@@ -14,7 +14,7 @@
     "url": "dawsonbotsford.com"
   },
   "bugs": {
-    "url": "https://github.com/dawsonbotsford/pluc/issues"
+    "url": "https://github.com/dawsbot/pluc/issues"
   },
   "bin": {
     "pluc-cli": "src/cli.js"
