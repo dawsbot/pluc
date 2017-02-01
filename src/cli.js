@@ -47,7 +47,6 @@ if (!(hasInput || hasFlags)) {
 
 let renderFn = pluc.transpileJson;
 if (hasFlags) {
-  // TODO: have transpile message show where it transpiled out to
   if (flags.transpile) {
     const message = `Transpiled ${pluc.sourcePath} to ${pluc.destinationPath}`;
     pluc.transpileJson();
@@ -64,7 +63,7 @@ if (hasFlags) {
 
 if (hasInput) {
   const alias = cli.input[0];
-  const command = cli.input[1] || pluc.lastCommand;
+  const command = cli.input.splice(1).join(' ') || pluc.lastCommand;
   // TODO: if alias already exists, prompt to save over
   pluc.setAlias(alias, command);
   logSuccess(`Aliased "${alias}" to "${command}"`);

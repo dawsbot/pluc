@@ -81,7 +81,7 @@ $ serve
 # Serving HTTP on 0.0.0.0 port 8000 ...
 ```
 
-Ensure you quote any arguments which contain spaces. Otherwise your shell will separate each word as separate arguments.
+Although it's always recommended that you quote the command for safety with bash argument splitting, your second argument **can** contain spaces! Parsing of this is done on your behalf by `pluc`. If your command contains flags though, you must quote it, which is why it's not a good habit.
 
 <br/>
 
