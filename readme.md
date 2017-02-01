@@ -1,7 +1,7 @@
 # pluc
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![XO code style][xo-image]][xo-url]
 
-> Create permanent terminal aliases instantly
+> :ok_hand: Create permanent terminal aliases instantly
 
 <p align="center">
   <img src="./media/logo.png" alt="logo"/>
@@ -16,10 +16,10 @@ $ npm install --global pluc
 Now source the pluc output file in your shell. Paste this in your bash profile (~/.bashrc, ~/.zshrc, ~/.bash_profile, , or ~/.profile).
 
 ```sh
-source "$(pluc-cli --shellPath)"
+source "$(pluc-cli --destinationPath)"
 function pluc() {
   pluc-cli "$@"
-  source "$(pluc-cli --shellPath)"
+  source "$(pluc-cli --destinationPath)"
 }
 ```
 
@@ -28,27 +28,29 @@ That also sets up a function to immediately source new aliases. Should you ignor
 ## Verify Installation
 
 ```sh
-$ pluc --shellPath
-# Should output a filepath, not an error.
+$ pluc --sourcePath
+# Should output a json filepath, not an error.
 ```
+
+Your bash aliases are generated from that JSON object. You don't need to pay attention to that in most cases. That's covered in depth in the "About" section below.
 
 ## Usage
 
 Save a new alias forever
 
 ```sh
-$ pluc <new alias> <command>
+$ pluc <alias> <command>
 ```
 
-Leave out `command` and pluc will infer and save your last entered command
+Leave out `command` and pluc will infer your last entered command
 
 ```sh
-$ pluc <new alias>
+$ pluc <alias>
 ```
 
 ## Examples
 
-Imagine you ssh to a work machine often:
+Imagine you ssh to this machine often:
 
 ```sh
 $ ssh username@username.example.org
@@ -65,7 +67,7 @@ $ sshme
 # ssh: Successfully ssh'd to example.org!
 ```
 
-Not only is the alias `sshme` instantly available, it's forever available in any new sessions.
+Not only is the alias `sshme` instantly available, it's forever available in any new sessions. The alternative is to save an `alias` in your bash profile. It's not only time consuming to open and edit, but you won't be able to use that alias until you `source` it.
 
 <br/>
 
@@ -79,7 +81,9 @@ $ serve
 # Serving HTTP on 0.0.0.0 port 8000 ...
 ```
 
-Ensure you quote any arguments which contain spaces. Otherwise your shell will separate each word as separate arguments.
+Although it's always recommended that you quote the command for safety with bash argument splitting, your second argument **can** contain spaces! Parsing of this is done on your behalf by `pluc`. If your command contains flags though, you must quote it, which is why it's not a good habit.
+
+<br/>
 
 If you want to see the full list of commands:
 
@@ -89,11 +93,29 @@ $ pluc --help
 
 ## About
 
-* Why not use the `source` command in my terminal?
-  * `source` is only available within your current shell, so as soon as you start a new session, your alias is gone.
+`pluc` uses a single JSON object to store aliases. Since JSON is already key-value based, it's a perfect data format. To manually edit the JSON source file (**you absolutely will eventually**) enter
 
-* How are the aliases stored?
-  * As a JSON object, located at `pluc --jsonPath`.
+```sh
+$ $EDITOR $(pluc --sourcePath)
+```
+
+After any new alias is added to `pluc`, the `render` function is called which builds a shell file. The shell output is what you `source`'d at the very beginning. To see it right now, enter
+
+```sh
+$ $EDITOR $(pluc --destinationPath)
+```
+
+:warning: Do not edit the output shell file, it gets deleted on re-render (often) :warning:
+
+
+## FAQ
+
+* Why not use the `source` command in my terminal?
+  * `source` is only available within your current shell. As soon as you start a new session, your alias is gone.
+
+* How can I edit my aliases?
+  * `$ $EDITOR $(pluc --sourcePath)`
+
 
 * Why store the data as a JSON object?
   * If JSON objects are used as the source of truth, a variety of render methods can be used. This means that **any** output format (`vimrc`, sublime snippets, etc.) which is key-value based can be generated using `pluc`.
@@ -102,10 +124,13 @@ $ pluc --help
 
 ```json
 {
-  "ph": "python -m SimpleHTTPServer",
+  "gi": "git init",
   "ga": "git add"
 }
 ```
+
+* The history inferred by `pluc <alias>` alone is not accurate.
+  * History is obtained with [@dawsonbotsford/shell-history](https://github.com/dawsonbotsford/shell-history). Please open an issue there.
 
 <!-- * How can I add a new render method?
   1. Create and test a render function as a standalone module. (Fork [build-shell-fn](https://github.com/dawsonbotsford/build-shell-fn))

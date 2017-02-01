@@ -11,16 +11,10 @@ const Pluc = require('./');
 const okayHand = '👌';
 const cli = meow(
   `Usage
-    $ pluc <new alias> <command>
+    $ pluc <alias> <command>
     or
-    $ pluc <new alias>
+    $ pluc <alias>
     # Command is taken from most-recently executed in history
-
-  Options
-    --shellPath  Print path to compiled shell
-    --jsonPath   Print path to json source
-    --transpile  Manually transpile json to shell (You probably won't need)
-    --projectName Manually change projectName (You probably won't need)
 
   Examples
     $ pluc gpom "git push origin master"
@@ -29,40 +23,50 @@ const cli = meow(
     $ npm install
     $ pluc ni
       Aliased "ni" to "npm install"
+
+  Options
+    --destinationPath  Print file path to compiled shell
+    --sourcePath   Print file path to json source
+    --transpile  Manually transpile json to shell (You probably won't need)
+    --projectName Manually change projectName (You probably won't need)
     `
 );
 
 updateNotifier({pkg: cli.pkg}).notify();
 
-const logSuccess = msg => console.log(chalk.green(msg));
+const logSuccess = message => console.log(chalk.green(`${okayHand}  ${message} ${okayHand}`));
 const flags = cli.flags;
 const hasInput = cli.input.length > 0;
 const hasFlags = Object.keys(cli.flags).length !== 0;
 
 let pluc = new Pluc();
 
-// TODO: on postinstall, setup empty shellPath
 if (!(hasInput || hasFlags)) {
   console.log(cli.help);
 }
 
+let renderFn = pluc.transpileJson;
 if (hasFlags) {
-  // TODO: have transpile message show where it transpiled out to
-  flags.transpile && pluc.transpileJson() && logSuccess('transpiled with success');
+  if (flags.transpile) {
+    const message = `Transpiled ${pluc.sourcePath} to ${pluc.destinationPath}`;
+    pluc.transpileJson();
+    logSuccess(message);
+  }
 
   const projectName = flags.projectName;
   projectName && (pluc = new Pluc({projectName}));
 
-  flags.jsonPath && console.log(pluc.jsonPath);
-  flags.shellPath && console.log(pluc.shellPath);
+  flags.sourcePath && console.log(pluc.sourcePath);
+  flags.destinationPath && console.log(pluc.destinationPath);
+  flags.vim && (renderFn = pluc.transpileVim);
 }
 
 if (hasInput) {
   const alias = cli.input[0];
-  const command = cli.input[1] || pluc.lastCommand;
+  const command = cli.input.splice(1).join(' ') || pluc.lastCommand;
   // TODO: if alias already exists, prompt to save over
   pluc.setAlias(alias, command);
-  logSuccess(`${okayHand}  Aliased "${alias}" to "${command}" ${okayHand}`);
+  logSuccess(`Aliased "${alias}" to "${command}"`);
 
-  pluc.transpileJson();
+  renderFn();
 }
