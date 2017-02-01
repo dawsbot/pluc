@@ -2,17 +2,15 @@ import path from 'path';
 import fs from 'fs-extra';
 import test from 'ava';
 import execa from 'execa';
-import Conf from 'dotless-conf';
+
+import {bindToContext} from './_helpers';
 
 const cliLocation = path.join(__dirname, '..', 'src', 'cli.js');
 const alias = 'alias';
 const command = 'command';
 
 test.beforeEach(t => {
-  t.context.testName = `pluc-index-test-${Math.floor(Math.random() * 99999999)}`;
-  t.context.config = new Conf({
-    projectName: t.context.testName
-  });
+  bindToContext(t.context);
 });
 
 test.afterEach.always(t => {
@@ -20,6 +18,7 @@ test.afterEach.always(t => {
 });
 
 test('two inputs', async t => {
-  await execa(cliLocation, ['--projectName', t.context.testName, alias, command]);
-  t.is(t.context.config.get(alias), command);
+  const {testName, config} = bindToContext({}, {configName: 'shell'});
+  await execa(cliLocation, ['--projectName', testName, alias, command]);
+  t.is(config.get(alias), command);
 });
