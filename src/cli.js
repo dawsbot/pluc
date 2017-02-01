@@ -27,6 +27,9 @@ const cli = meow(
   Options
     --destinationPath  Print file path to compiled shell
     --sourcePath   Print file path to json source
+
+    --vim          Print file path to json source
+
     --transpile  Manually transpile json to shell (You probably won't need)
     --projectName Manually change projectName (You probably won't need)
     `
@@ -47,15 +50,14 @@ if (!(hasInput || hasFlags)) {
 
 let renderFn = pluc.transpileJson;
 if (hasFlags) {
-  // TODO: have transpile message show where it transpiled out to
+  const projectName = flags.projectName;
+  projectName && (pluc = new Pluc({projectName}));
+
   if (flags.transpile) {
     const message = `Transpiled ${pluc.sourcePath} to ${pluc.destinationPath}`;
     pluc.transpileJson();
     logSuccess(message);
   }
-
-  const projectName = flags.projectName;
-  projectName && (pluc = new Pluc({projectName}));
 
   flags.sourcePath && console.log(pluc.sourcePath);
   flags.destinationPath && console.log(pluc.destinationPath);
