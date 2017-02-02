@@ -25,6 +25,8 @@ function pluc() {
 
 That also sets up a function to immediately source new aliases. Should you ignore the above bash code, you'd need to manually resource the pluc shell file per session **and** after adding a new alias.
 
+<br/>
+
 ## Verify Installation
 
 ```sh
@@ -33,6 +35,8 @@ $ pluc --sourcePath
 ```
 
 Your bash aliases are generated from that JSON object. You don't need to pay attention to that in most cases. That's covered in depth in the "About" section below.
+
+<br/>
 
 ## Usage
 
@@ -47,6 +51,8 @@ Leave out `command` and pluc will infer your last entered command
 ```sh
 $ pluc <alias>
 ```
+
+<br/>
 
 ## Examples
 
@@ -91,6 +97,8 @@ If you want to see the full list of commands:
 $ pluc --help
 ```
 
+<br/>
+
 ## About
 
 `pluc` uses a single JSON object to store aliases. Since JSON is already key-value based, it's a perfect data format. To manually edit the JSON source file (**you absolutely will eventually**) enter
@@ -107,6 +115,41 @@ $ $EDITOR $(pluc --destinationPath)
 
 :warning: Do not edit the output shell file, it gets deleted on re-render (often) :warning:
 
+<br/>
+
+## Backup important aliases
+
+Are you saving important aliases or a large amount of them? If so, back these up.
+
+#### Backup to Dropbox
+
+First find the path your config file is saved in:
+
+```sh
+$ pluc --sourcePath
+# /Users/dawsonbotsford/Library/Preferences/pluc-nodejs/config.json
+```
+
+This file needs to be moved into Dropbox and symlinked back to the original location
+
+```sh
+mv /Users/dawsonbotsford/Library/Preferences/pluc-nodejs/config.json ~/Dropbox/
+ln -s ~/Dropbox/config.json /Users/dawsonbotsford/Library/Preferences/pluc-nodejs/config.json
+```
+
+#### Backup to git
+
+Alternatively, use git to manually version control.
+
+```sh
+$ pluc --sourcePath
+# /Users/dawsonbotsford/Library/Preferences/pluc-nodejs/config.json
+$ cd /Users/dawsonbotsford/Library/Preferences/pluc-nodejs
+$ git init
+# add remote, and push!
+```
+
+<br/>
 
 ## FAQ
 
