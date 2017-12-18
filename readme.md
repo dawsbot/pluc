@@ -7,23 +7,64 @@
   <img src="./media/logo.png" alt="logo"/>
 </p>
 
+## Usage
+
+Save a new alias forever
+
+```sh
+$ pluc <alias> <command>
+```
+
+Leave out "`command`" and pluc will use your last command from shell history.
+
+```sh
+$ pluc <alias>
+```
+
+<br/>
+
+Here's what this could look like:
+
+```sh
+$ pluc serve "python -m SimpleHTTPServer"
+
+👌 Aliased "serve" to "python -m SimpleHTTPServer" 👌
+```
+
+or
+
+```sh
+$ pluc ya "yarn add"
+
+👌 Aliased "ya" to "yarn add" 👌
+
+$ ya react #Your new alias is instantly usable
+
+```
+
+<br/>
+
 ## Install
+
+1. npm install
 
 ```sh
 $ npm install --global pluc
 ```
 
+2. Source pluc in your shell
+
 Now source the pluc output file in your shell. Paste this in your bash profile (~/.bashrc, ~/.zshrc, ~/.bash_profile, , or ~/.profile).
 
 ```sh
-source "$(pluc-cli --destinationPath)"
-function pluc() {
+source "$(pluc-cli --destinationPath)" #source pluc aliases on shell startup
+function pluc() { #call pluc-cli and source new alias immediatly
   pluc-cli "$@"
   source "$(pluc-cli --destinationPath)"
 }
 ```
 
-That also sets up a function to immediately source new aliases. Should you ignore the above bash code, you'd need to manually resource the pluc shell file per session **and** after adding a new alias.
+Should you ignore the above bash code, you'd need to manually resource the pluc shell file per session **and** after adding a new alias.
 
 <br/>
 
@@ -38,23 +79,7 @@ Your bash aliases are generated from that JSON object. You don't need to pay att
 
 <br/>
 
-## Usage
-
-Save a new alias forever
-
-```sh
-$ pluc <alias> <command>
-```
-
-Leave out `command` and pluc will infer your last entered command
-
-```sh
-$ pluc <alias>
-```
-
-<br/>
-
-## Examples
+## More Examples
 
 Imagine you ssh to this machine often:
 
