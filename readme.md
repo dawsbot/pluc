@@ -1,11 +1,12 @@
-# pluc
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![XO code style][xo-image]][xo-url]
-
-> :ok_hand: Create permanent terminal aliases instantly
-
 <p align="center">
   <img src="./media/logo.png" alt="logo"/>
 </p>
+
+> :ok_hand: Create permanent terminal aliases instantly
+
+<br/>
+
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 ## Usage
 
