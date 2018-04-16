@@ -1,6 +1,6 @@
 {
   "name": "pluc",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Create permanent terminal aliases instantly",
   "license": "MIT",
   "homepage": "https://github.com/dawsbot/pluc#readme",
@@ -38,7 +38,7 @@
     "@dawsonbotsford/shell-history": "^2.0.0",
     "build-shell-script": "^1.0.1",
     "chalk": "^1.1.3",
-    "dotless-conf": "0.0.0",
+    "dotless-conf": "1.0.0",
     "json-fn-file": "^1.0.0",
     "meow": "^3.7.0",
     "update-notifier": "^1.0.2"
