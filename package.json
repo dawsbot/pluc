@@ -20,7 +20,7 @@
     "pluc-cli": "src/cli.js"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "scripts": {
     "test": "xo && ava"
