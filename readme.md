@@ -4,6 +4,9 @@
 
 > :ok_hand: Create permanent terminal aliases instantly
 
+⚠️Under construction, beware of breaking changes ⚠️
+
+
 <br/>
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
